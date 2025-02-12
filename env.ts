@@ -4,7 +4,7 @@ import { $ } from "@david/dax";
 function getRequiredEnv(variableName: string): string {
   const value = Deno.env.get(variableName);
   if (!value) {
-    $.logError("MissingRequiredEnv", `${variableName} is not set`);
+    $.logError("Error", `${variableName} is not set`);
     Deno.exit(1);
   }
   return value;

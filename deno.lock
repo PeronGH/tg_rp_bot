@@ -14,6 +14,7 @@
     "jsr:@std/path@^1.0.8": "1.0.8",
     "jsr:@std/streams@0.221": "0.221.0",
     "npm:@google/generative-ai@0.21": "0.21.0",
+    "npm:@grammyjs/conversations@^2.0.1": "2.0.1_grammy@1.34.1",
     "npm:grammy@^1.34.1": "1.34.1"
   },
   "jsr": {
@@ -78,6 +79,12 @@
     "@google/generative-ai@0.21.0": {
       "integrity": "sha512-7XhUbtnlkSEZK15kN3t+tzIMxsbKm/dSkKBFalj+20NvPKe1kBY7mR2P7vuijEn+f06z5+A8bVGKO0v39cr6Wg=="
     },
+    "@grammyjs/conversations@2.0.1_grammy@1.34.1": {
+      "integrity": "sha512-wpOXa4do03JeTVbv42CqsiWRczycey/58mccQekprhNZzJb/GL+/xSx0CSIDoaHm7x2MeGgtmBbpu9tGZQkqng==",
+      "dependencies": [
+        "grammy"
+      ]
+    },
     "@grammyjs/types@3.18.0": {
       "integrity": "sha512-/VpQcT6Z0+Lw6H6jv2JvnDmqB1/9rjbFdDBlPBPUW3kQ1bWfjzfaiVk2+J2eiid3o3sLaPp3ZK0XjEI1gWNc3g=="
     },
@@ -133,6 +140,7 @@
       "jsr:@david/dax@0.42",
       "jsr:@std/dotenv@~0.225.3",
       "npm:@google/generative-ai@0.21",
+      "npm:@grammyjs/conversations@^2.0.1",
       "npm:grammy@^1.34.1"
     ]
   }
