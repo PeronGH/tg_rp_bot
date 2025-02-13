@@ -38,6 +38,7 @@ bot.on("message:text", async (ctx) => {
           console.warn("UnableToConvert", ctx.message.reply_to_message);
           break;
         }
+        console.info("ctxRepliedMessage", ctxRepliedMessage.data);
         await writeMessage(ctxRepliedMessage.data);
         messages.unshift(ctxRepliedMessage.data);
       }
