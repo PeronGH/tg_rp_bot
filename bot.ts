@@ -10,17 +10,17 @@ import { createStoreMessageToChatMessageConverter } from "./llm/prompt.ts";
 export const bot = new Bot(TG_BOT_TOKEN);
 
 bot.on("message:text", async (ctx) => {
+  // Store the user message first
+  const userMsg = toStoredMessage(ctx.message);
+  console.log("userMsg", userMsg);
+  await writeMessage(userMsg);
+
   // Ensure it is either a direct reply to bot message
   // or a message includes @BotName
   if (
     ctx.message.reply_to_message?.from?.id !== bot.botInfo.id &&
     !ctx.message.text.includes(`@${bot.botInfo.username}`)
   ) return;
-
-  // Store the user message first
-  const userMsg = toStoredMessage(ctx.message);
-  console.log("userMsg", userMsg);
-  await writeMessage(userMsg);
 
   // Reply to the message
   // - Gather messages
