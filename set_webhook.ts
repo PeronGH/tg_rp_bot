@@ -8,8 +8,15 @@ if (!botToken) {
 
 const bot = new Bot(botToken);
 
-const endpoint = Deno.args[0] ?? prompt("Webhook Endpoint:");
+const endpoint = Deno.env.get("WEBHOOK_ENDPOINT") ??
+  prompt("Webhook Endpoint:");
+if (!endpoint) {
+  throw new Error("Webhook endpoint is not provided");
+}
 
-await bot.api.setWebhook(endpoint);
+const secretToken = Deno.env.get("TG_BOT_SECRET_TOKEN") ??
+  prompt("Secret Token (^D to skip):") ?? undefined;
+
+await bot.api.setWebhook(endpoint, { secret_token: secretToken });
 
 console.log("Webhook Endpoint is successfully set");
