@@ -1,10 +1,10 @@
 import type { Message } from "grammy/types";
 import { StoreMessageParams, storeMessageParamsSchema } from "./schema.ts";
 
-export function toStoredMessage(
+export function toStoredMessageSafe(
   { chat, message_id, from, reply_to_message, text }: Message,
-): StoreMessageParams {
-  return storeMessageParamsSchema.parse({
+) {
+  return storeMessageParamsSchema.safeParse({
     chatId: chat.id,
     messageId: message_id,
     fromName: from?.last_name
@@ -14,4 +14,10 @@ export function toStoredMessage(
     text,
     replyToMessageId: reply_to_message?.message_id, // TODO: fix potential bug with forwarded message (unsure if the bug exists)
   });
+}
+
+export function toStoredMessage(msg: Message): StoreMessageParams {
+  const result = toStoredMessageSafe(msg);
+  if (!result.success) throw result.error;
+  return result.data;
 }

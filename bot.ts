@@ -1,6 +1,6 @@
 import { Bot } from "grammy";
 import { TG_BOT_TOKEN } from "./env.ts";
-import { toStoredMessage } from "./store/converters.ts";
+import { toStoredMessage, toStoredMessageSafe } from "./store/converters.ts";
 import { writeMessage } from "./store/kv.ts";
 import { generate } from "./llm/openai.ts";
 import { StoreMessageData } from "./store/schema.ts";
@@ -28,7 +28,20 @@ bot.on("message:text", async (ctx) => {
   while (messages[0].replyToMessageId) {
     const replyToMessageId = messages[0].replyToMessageId!;
     const repliedMessage = await readMessage(userMsg.chatId, replyToMessageId);
-    if (!repliedMessage) break;
+    if (!repliedMessage) {
+      // Message is not in KV, but may be in `ctx.message.reply_to_message`
+      if (messages[0] === userMsg) {
+        const ctxRepliedMessage = toStoredMessageSafe(
+          ctx.message.reply_to_message!,
+        );
+        if (!ctxRepliedMessage.success) {
+          break;
+        }
+        await writeMessage(ctxRepliedMessage.data);
+        messages.unshift(ctxRepliedMessage.data);
+      }
+      break;
+    }
     messages.unshift(repliedMessage);
   }
   // - Generate reply
