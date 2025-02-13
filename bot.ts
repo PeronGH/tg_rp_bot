@@ -8,7 +8,7 @@ import { TG_BOT_TOKEN } from "./env.ts";
 import { generalChat } from "./conversations.ts";
 import { $ } from "@david/dax";
 
-const bot = new Bot<ConversationFlavor<Context>>(TG_BOT_TOKEN);
+export const bot = new Bot<ConversationFlavor<Context>>(TG_BOT_TOKEN);
 
 bot.use(conversations());
 
@@ -20,5 +20,3 @@ $.logStep("Success", "Bot is successfully initialized");
 bot.hears(new RegExp(`@${bot.botInfo.username}\\b`), async (ctx) => {
   await ctx.conversation.enter("generalChat");
 });
-
-await bot.start();
