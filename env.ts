@@ -11,7 +11,8 @@ function getRequiredEnv(variableName: string): string {
 }
 
 export const TG_BOT_TOKEN = getRequiredEnv("TG_BOT_TOKEN");
-export const GEMINI_API_KEY = getRequiredEnv("GEMINI_API_KEY");
+export const OPENAI_API_KEY = getRequiredEnv("OPENAI_API_KEY");
+export const OPENAI_MODEL = getRequiredEnv("OPENAI_MODEL");
+
+export const OPENAI_BASE_URL = Deno.env.get("OPENAI_BASE_URL");
 export const SYSTEM_INSTRUCTION = Deno.env.get("SYSTEM_INSTRUCTION");
-export const GEMINI_MODEL = Deno.env.get("GEMINI_MODEL") ??
-  "gemini-2.0-pro-exp-02-05";
