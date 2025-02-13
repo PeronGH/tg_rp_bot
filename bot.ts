@@ -40,7 +40,6 @@ bot.on("message:text", async (ctx) => {
   // - Send reply
   const reply = await ctx.reply(replyContent, {
     reply_parameters: { message_id: userMsg.messageId },
-    reply_markup: { force_reply: true },
   });
 
   // Store the reply message
