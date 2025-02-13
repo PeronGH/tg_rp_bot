@@ -6,11 +6,18 @@ export async function generalChat(conversation: Conversation, ctx: Context) {
   const history: Content[] = [];
 
   for (;;) {
-    history.push({ role: "user", parts: [{ text: ctx.message?.text! }] });
+    const userMessage = ctx.message!;
+
+    history.push({ role: "user", parts: [{ text: userMessage.text! }] });
     const lastBotMessage = await ctx.reply(
       `Number of Elements in history: ${history.length}`,
+      {
+        reply_parameters: {
+          message_id: userMessage.message_id,
+        },
+      },
     );
-    console.log(history);
+    await conversation.external(() => console.log(history));
     history.push({ role: "model", parts: [{ text: lastBotMessage.text! }] });
 
     ctx = await conversation.waitForReplyTo(lastBotMessage.message_id!);

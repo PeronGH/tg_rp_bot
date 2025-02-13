@@ -15,5 +15,3 @@ export const generationConfig = {
   maxOutputTokens: 8192,
   responseMimeType: "text/plain",
 } as const;
-
-model.startChat({})
