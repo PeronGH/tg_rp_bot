@@ -19,4 +19,4 @@ const secretToken = Deno.env.get("TG_BOT_SECRET_TOKEN") ??
 
 await bot.api.setWebhook(endpoint, { secret_token: secretToken });
 
-console.log("Webhook Endpoint is successfully set");
+console.info("Webhook Endpoint is successfully set");

@@ -12,7 +12,7 @@ export const bot = new Bot(TG_BOT_TOKEN);
 bot.on("message:text", async (ctx) => {
   // Store the user message first
   const userMsg = toStoredMessage(ctx.message);
-  console.log("userMsg", userMsg);
+  console.info("userMsg", userMsg);
   await writeMessage(userMsg);
 
   // Ensure it is either a direct reply to bot message
@@ -35,6 +35,7 @@ bot.on("message:text", async (ctx) => {
           ctx.message.reply_to_message!,
         );
         if (!ctxRepliedMessage.success) {
+          console.warn("UnableToConvert", ctx.message.reply_to_message);
           break;
         }
         await writeMessage(ctxRepliedMessage.data);
@@ -48,7 +49,7 @@ bot.on("message:text", async (ctx) => {
   const history = messages.map(
     createStoreMessageToChatMessageConverter(bot.botInfo.id),
   );
-  console.log("history", history);
+  console.info("history", history);
   const replyContent = await generate(history);
   // - Send reply
   const reply = await ctx.reply(replyContent, {
@@ -57,13 +58,13 @@ bot.on("message:text", async (ctx) => {
 
   // Store the reply message
   const replyMsg = toStoredMessage(reply);
-  console.log("replyMsg", replyMsg);
+  console.info("replyMsg", replyMsg);
   await writeMessage(replyMsg);
 });
 
 bot.on("edited_message:text", async (ctx) => {
   // Store the updated user message
   const editedMsg = toStoredMessage(ctx.editedMessage);
-  console.log("editedMsg", editedMsg);
+  console.info("editedMsg", editedMsg);
   await writeMessage(editedMsg);
 });
