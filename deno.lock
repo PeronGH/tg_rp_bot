@@ -3,15 +3,15 @@
   "specifiers": {
     "jsr:@openai/openai@^4.83.0": "4.83.0",
     "jsr:@std/dotenv@~0.225.3": "0.225.3",
-    "npm:@grammyjs/conversations@^2.0.1": "2.0.1_grammy@1.34.1",
     "npm:grammy@^1.34.1": "1.34.1",
-    "npm:zod@3": "3.24.2"
+    "npm:zod@3": "3.24.2",
+    "npm:zod@^3.24.2": "3.24.2"
   },
   "jsr": {
     "@openai/openai@4.83.0": {
       "integrity": "114082705b8a2d6ef96e0228abe2fa5ad3842f7d4f1c891a94bdfe6ad89f728f",
       "dependencies": [
-        "npm:zod"
+        "npm:zod@3"
       ]
     },
     "@std/dotenv@0.225.3": {
@@ -19,12 +19,6 @@
     }
   },
   "npm": {
-    "@grammyjs/conversations@2.0.1_grammy@1.34.1": {
-      "integrity": "sha512-wpOXa4do03JeTVbv42CqsiWRczycey/58mccQekprhNZzJb/GL+/xSx0CSIDoaHm7x2MeGgtmBbpu9tGZQkqng==",
-      "dependencies": [
-        "grammy"
-      ]
-    },
     "@grammyjs/types@3.18.0": {
       "integrity": "sha512-/VpQcT6Z0+Lw6H6jv2JvnDmqB1/9rjbFdDBlPBPUW3kQ1bWfjzfaiVk2+J2eiid3o3sLaPp3ZK0XjEI1gWNc3g=="
     },
@@ -82,8 +76,8 @@
     "dependencies": [
       "jsr:@openai/openai@^4.83.0",
       "jsr:@std/dotenv@~0.225.3",
-      "npm:@grammyjs/conversations@^2.0.1",
-      "npm:grammy@^1.34.1"
+      "npm:grammy@^1.34.1",
+      "npm:zod@^3.24.2"
     ]
   }
 }

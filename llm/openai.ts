@@ -3,7 +3,7 @@ import {
   OPENAI_BASE_URL,
   OPENAI_MODEL,
   SYSTEM_INSTRUCTION,
-} from "./env.ts";
+} from "../env.ts";
 import { OpenAI } from "@openai/openai";
 
 export type ChatMessage = OpenAI.Chat.Completions.ChatCompletionMessageParam;

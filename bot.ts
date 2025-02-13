@@ -1,21 +1,45 @@
-import { Bot, Context } from "grammy";
-import {
-  type ConversationFlavor,
-  conversations,
-  createConversation,
-} from "@grammyjs/conversations";
+import { Bot } from "grammy";
 import { TG_BOT_TOKEN } from "./env.ts";
-import { generalChat } from "./conversations.ts";
+import { toStoredMessage } from "./store/converters.ts";
+import { writeMessage } from "./store/kv.ts";
+import { ChatMessage, generate } from "./llm/openai.ts";
+import { StoreMessageData, StoreMessageParams } from "./store/schema.ts";
+import { readMessage } from "./store/kv.ts";
+import { createStoreMessageToChatMessageConverter } from "./llm/prompt.ts";
 
-export const bot = new Bot<ConversationFlavor<Context>>(TG_BOT_TOKEN);
+export const bot = new Bot(TG_BOT_TOKEN);
 
-bot.use(conversations());
+bot.on("message:text", async (ctx) => {
+  // TODO: further filtering
 
-bot.use(createConversation(generalChat));
+  // Store the user message first
+  const userMsg = toStoredMessage(ctx.message);
+  console.log("userMsg", userMsg);
+  await writeMessage(userMsg);
 
-await bot.init();
-console.log("Bot is successfully initialized");
+  // Reply to the message
+  // - Gather messages
+  const messages: StoreMessageData[] = [userMsg];
+  while (messages[0].replyToMessageId) {
+    const replyToMessageId = messages[0].replyToMessageId!;
+    const repliedMessage = await readMessage(userMsg.chatId, replyToMessageId);
+    if (!repliedMessage) break;
+    messages.unshift(repliedMessage);
+  }
+  // - Generate reply
+  const history = messages.map(
+    createStoreMessageToChatMessageConverter(bot.botInfo.id),
+  );
+  console.log("history", history);
+  const replyContent = await generate(history);
+  // - Send reply
+  const reply = await ctx.reply(replyContent, {
+    reply_parameters: { message_id: userMsg.messageId },
+    reply_markup: { force_reply: true },
+  });
 
-bot.hears(new RegExp(`@${bot.botInfo.username}\\b`), async (ctx) => {
-  await ctx.conversation.enter("generalChat");
+  // Store the reply message
+  const replyMsg = toStoredMessage(reply);
+  console.log("replyMsg", replyMsg);
+  await writeMessage(replyMsg);
 });
