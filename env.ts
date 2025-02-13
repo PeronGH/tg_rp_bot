@@ -1,11 +1,9 @@
 import "@std/dotenv/load";
-import { $ } from "@david/dax";
 
 function getRequiredEnv(variableName: string): string {
   const value = Deno.env.get(variableName);
   if (!value) {
-    $.logError("Error", `${variableName} is not set`);
-    Deno.exit(1);
+    throw new Error(`${variableName} is not set!`);
   }
   return value;
 }

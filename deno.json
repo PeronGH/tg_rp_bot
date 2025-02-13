@@ -1,6 +1,5 @@
 {
   "imports": {
-    "@david/dax": "jsr:@david/dax@^0.42.0",
     "@grammyjs/conversations": "npm:@grammyjs/conversations@^2.0.1",
     "@openai/openai": "jsr:@openai/openai@^4.83.0",
     "@std/dotenv": "jsr:@std/dotenv@^0.225.3",
