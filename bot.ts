@@ -2,8 +2,8 @@ import { Bot } from "grammy";
 import { TG_BOT_TOKEN } from "./env.ts";
 import { toStoredMessage } from "./store/converters.ts";
 import { writeMessage } from "./store/kv.ts";
-import { ChatMessage, generate } from "./llm/openai.ts";
-import { StoreMessageData, StoreMessageParams } from "./store/schema.ts";
+import { generate } from "./llm/openai.ts";
+import { StoreMessageData } from "./store/schema.ts";
 import { readMessage } from "./store/kv.ts";
 import { createStoreMessageToChatMessageConverter } from "./llm/prompt.ts";
 
