@@ -48,3 +48,10 @@ bot.on("message:text", async (ctx) => {
   console.log("replyMsg", replyMsg);
   await writeMessage(replyMsg);
 });
+
+bot.on("edited_message:text", async (ctx) => {
+  // Store the updated user message
+  const editedMsg = toStoredMessage(ctx.editedMessage);
+  console.log("editedMsg", editedMsg);
+  await writeMessage(editedMsg);
+});
