@@ -1,8 +1,8 @@
 import {
+  StoreMessage,
   StoreMessageData,
   storeMessageDataSchema,
-  StoreMessageParams,
-  storeMessageParamsSchema,
+  storeMessageSchema,
 } from "./schema.ts";
 
 const kv = await Deno.openKv();
@@ -11,8 +11,8 @@ function chatMessageKey(chatId: number, messageId: number): Deno.KvKey {
   return ["chats", chatId, "messages", messageId];
 }
 
-export async function writeMessage(params: StoreMessageParams) {
-  const validated = storeMessageParamsSchema.parse(params);
+export async function writeMessage(msg: StoreMessage) {
+  const validated = storeMessageSchema.parse(msg);
   const key = chatMessageKey(validated.chatId, validated.messageId);
   const data = storeMessageDataSchema.parse(validated);
   await kv.set(key, data);

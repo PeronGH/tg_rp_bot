@@ -1,5 +1,5 @@
 import { webhookCallback } from "grammy";
-import { bot } from "./bot.ts";
+import { bot } from "./bot/bot.ts";
 import { TG_BOT_SECRET_TOKEN } from "./env.ts";
 import ipRangeCheck from "ip-range-check";
 
