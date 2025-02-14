@@ -10,6 +10,8 @@ import { createStoreMessageToChatMessageConverter } from "./llm/prompt.ts";
 export const bot = new Bot(TG_BOT_TOKEN);
 
 bot.on("message:text", async (ctx) => {
+  // TODO: check if the chat id is in ALLOWED_CHAT_IDS
+
   // Store the user message first
   const userMsg = toStoreMessage(ctx.message);
   console.info("userMsg", userMsg);
