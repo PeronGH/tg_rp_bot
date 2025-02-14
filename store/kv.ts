@@ -51,5 +51,5 @@ export async function listRecentMessages(
     });
   }
 
-  return messages;
+  return messages.reverse();
 }
