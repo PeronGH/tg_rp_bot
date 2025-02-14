@@ -15,7 +15,7 @@ export function createStoreMessageToChatMessageConverter(
         content: storeMsg.text,
       };
     }
-    const metadata = `[sender(name=${JSON.stringify(storeMsg.fromName)})]`;
+    const metadata = `[sender=${JSON.stringify(storeMsg.fromName)}]`;
     return {
       role: "user",
       content: `${metadata}\n${storeMsg.text}`,
