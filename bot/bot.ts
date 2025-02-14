@@ -1,7 +1,7 @@
 import { Bot } from "grammy";
 import { TG_BOT_TOKEN } from "../env.ts";
 import { toStoreMessage, toStoreMessageSafe } from "../store/converters.ts";
-import { writeMessage } from "../store/kv.ts";
+import { listRecentMessages, writeMessage } from "../store/kv.ts";
 import { generate } from "../llm/openai.ts";
 import { StoreMessage } from "../store/schema.ts";
 import { createStoreMessageToChatMessageConverter } from "../llm/prompt.ts";
@@ -24,9 +24,26 @@ bot.on("message:text", async (ctx) => {
     !ctx.message.text.includes(`@${bot.botInfo.username}`)
   ) return;
 
+  let includeRecent = 0;
+  // Check if recent messages should be included
+  const matches = /^\/recent(\d+)/g.exec(userMsg.text);
+  if (matches && matches[1]) {
+    const nRecent = Number.parseInt(matches[1]);
+    if (nRecent > 0) {
+      includeRecent = nRecent;
+    }
+  }
+
+  const initialMessages = includeRecent
+    ? [
+      ...(await listRecentMessages(userMsg.chatId, includeRecent)),
+      userMsg,
+    ]
+    : [userMsg];
+
   // Reply to the message
   // - Gather messages
-  const messages: StoreMessage[] = await collectReplyChain([userMsg]);
+  const messages: StoreMessage[] = await collectReplyChain(initialMessages);
   getCtxRepliedMessage: {
     // - Special case: reply to uncached message, but that message is in ctx
     if (

@@ -1,7 +1,9 @@
 import { readMessage } from "./kv.ts";
 import { StoreMessage } from "./schema.ts";
 
-export async function collectReplyChain(messages: StoreMessage[]) {
+export async function collectReplyChain(
+  messages: StoreMessage[],
+): Promise<StoreMessage[]> {
   const collected = new Map<number, StoreMessage>(); // messageId => StoreMessage
 
   async function process(message: StoreMessage) {
