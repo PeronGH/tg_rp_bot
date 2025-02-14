@@ -4,7 +4,6 @@ import { toStoreMessage, toStoreMessageSafe } from "../store/converters.ts";
 import { writeMessage } from "../store/kv.ts";
 import { generate } from "../llm/openai.ts";
 import { StoreMessage } from "../store/schema.ts";
-import { readMessage } from "../store/kv.ts";
 import { createStoreMessageToChatMessageConverter } from "../llm/prompt.ts";
 import { collectReplyChain } from "../store/collectors.ts";
 
