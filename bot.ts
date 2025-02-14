@@ -1,6 +1,6 @@
 import { Bot } from "grammy";
 import { TG_BOT_TOKEN } from "./env.ts";
-import { toStoredMessage, toStoredMessageSafe } from "./store/converters.ts";
+import { toStoreMessage, toStoreMessageSafe } from "./store/converters.ts";
 import { writeMessage } from "./store/kv.ts";
 import { generate } from "./llm/openai.ts";
 import { StoreMessageData } from "./store/schema.ts";
@@ -11,7 +11,7 @@ export const bot = new Bot(TG_BOT_TOKEN);
 
 bot.on("message:text", async (ctx) => {
   // Store the user message first
-  const userMsg = toStoredMessage(ctx.message);
+  const userMsg = toStoreMessage(ctx.message);
   console.info("userMsg", userMsg);
   await writeMessage(userMsg);
 
@@ -31,7 +31,7 @@ bot.on("message:text", async (ctx) => {
     if (!repliedMessage) {
       // Message is not in KV, but may be in `ctx.message.reply_to_message`
       if (messages[0] === userMsg) {
-        const ctxRepliedMessage = toStoredMessageSafe(
+        const ctxRepliedMessage = toStoreMessageSafe(
           ctx.message.reply_to_message!,
         );
         if (!ctxRepliedMessage.success) {
@@ -58,14 +58,14 @@ bot.on("message:text", async (ctx) => {
   });
 
   // Store the reply message
-  const replyMsg = toStoredMessage(reply);
+  const replyMsg = toStoreMessage(reply);
   console.info("replyMsg", replyMsg);
   await writeMessage(replyMsg);
 });
 
 bot.on("edited_message:text", async (ctx) => {
   // Store the updated user message
-  const editedMsg = toStoredMessage(ctx.editedMessage);
+  const editedMsg = toStoreMessage(ctx.editedMessage);
   console.info("editedMsg", editedMsg);
   await writeMessage(editedMsg);
 });

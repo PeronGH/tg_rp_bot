@@ -1,7 +1,7 @@
 import type { Message } from "grammy/types";
 import { StoreMessageParams, storeMessageParamsSchema } from "./schema.ts";
 
-export function toStoredMessageSafe(
+export function toStoreMessageSafe(
   { message_id, from, reply_to_message, text, caption, chat }: Message,
 ) {
   const storeMsg = {
@@ -15,8 +15,8 @@ export function toStoredMessageSafe(
   return storeMessageParamsSchema.safeParse(storeMsg);
 }
 
-export function toStoredMessage(msg: Message): StoreMessageParams {
-  const result = toStoredMessageSafe(msg);
+export function toStoreMessage(msg: Message): StoreMessageParams {
+  const result = toStoreMessageSafe(msg);
   if (!result.success) throw result.error;
   return result.data;
 }
