@@ -24,12 +24,14 @@ export function createStoreMessageToChatMessageConverter(
 }
 
 function generateMetadata(message: StoreMessage): string {
-  const kvPairs: [string, string][] = [
-    ["id", JSON.stringify(message.messageId)],
-    ["sender", JSON.stringify(message.fromName)],
-  ];
+  const metadata: Record<string, unknown> = {
+    id: message.messageId,
+    sender: message.fromName,
+  };
+
   if (message.replyToMessageId) {
-    kvPairs.push(["replyToId", JSON.stringify(message.replyToMessageId)]);
+    metadata["replyToId"] = message.replyToMessageId;
   }
-  return "[" + kvPairs.map(([k, v]) => `${k}=${v}`).join(", ") + "]";
+
+  return JSON.stringify(metadata);
 }
