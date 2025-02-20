@@ -4,7 +4,7 @@ import { toStoreMessage, toStoreMessageSafe } from "../store/converters.ts";
 import { listRecentMessages, writeMessage } from "../store/kv.ts";
 import { generate } from "../llm/openai.ts";
 import { StoreMessage } from "../store/schema.ts";
-import { createStoreMessageToChatMessageConverter } from "../llm/prompt.ts";
+import { generatePrompt } from "../llm/prompt.ts";
 import { collectReplyChain } from "../store/collectors.ts";
 
 export const bot = new Bot(TG_BOT_TOKEN);
@@ -77,11 +77,13 @@ bot.on("message:text", async (ctx) => {
       }
     }
     // - Generate reply
-    const history = messages.map(
-      createStoreMessageToChatMessageConverter(bot.botInfo.id),
-    );
-    console.info("history", history);
-    const replyContent = await generate(history);
+    console.info("messages", messages);
+    const prompt = generatePrompt(messages);
+    console.info("prompt", prompt);
+    const replyContent = await generate([{
+      role: "assistant",
+      content: prompt,
+    }]);
     // - Send reply
     const reply = await ctx.reply(replyContent, {
       reply_parameters: { message_id: userMsg.messageId },
