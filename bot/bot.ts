@@ -80,10 +80,10 @@ bot.on("message:text", async (ctx) => {
     const prompt = generatePrompt(messages);
     console.info("prompt", prompt);
     const replyContent = await generate([{
-      role: "assistant",
+      role: "user",
       content: prompt,
     }]);
-    console.log("replyContent", replyContent);
+    console.info("replyContent", replyContent);
     // - Send reply
     const reply = await ctx.reply(replyContent, {
       reply_parameters: { message_id: userMsg.messageId },
