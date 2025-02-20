@@ -2,8 +2,8 @@ import { StoreMessage } from "../store/schema.ts";
 
 function generateMetadata(message: StoreMessage): string {
   const metadata: Record<string, unknown> = {
-    msg_id: message.messageId,
     sender_name: message.fromName,
+    msg_id: message.messageId,
   };
 
   if (message.replyToMessageId) {
