@@ -25,12 +25,12 @@ export function createStoreMessageToChatMessageConverter(
 
 function generateMetadata(message: StoreMessage): string {
   const metadata: Record<string, unknown> = {
-    id: message.messageId,
-    sender: message.fromName,
+    msg_id: message.messageId,
+    sender_name: message.fromName,
   };
 
   if (message.replyToMessageId) {
-    metadata["replyToId"] = message.replyToMessageId;
+    metadata["reply_to_msg_id"] = message.replyToMessageId;
   }
 
   return JSON.stringify(metadata);
