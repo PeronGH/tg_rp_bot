@@ -30,5 +30,9 @@ ${messages.map(formatMessage).join("\n\n")}
 
 The first line of each message is a JSON representing its metadata. The rest of the message is the quoted message content.
 
-You are now replying to the latest message. Pay attention to its context. Do NOT include metadata or the quote symbol ('>') in your reply. Respond to the users in the language they use or request.`;
+You can distinguish between users by 'sender_name' in metadata. Different users are different - reply to them accordingly. Do NOT mix them up.
+
+Pay attention to the context. 'msg_id' and 'reply_to_msg_id' can show the relationships between messages.
+
+You are now replying to the latest message. Do NOT include metadata or the quote symbol ('>') in your reply. Respond to the users in the language they use or request.`;
 }
