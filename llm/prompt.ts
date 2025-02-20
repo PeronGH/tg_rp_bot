@@ -1,16 +1,11 @@
 import { StoreMessage } from "../store/schema.ts";
 
 function generateMetadata(message: StoreMessage): string {
-  const metadata: Record<string, unknown> = {
-    sender_name: message.fromName,
-    msg_id: message.messageId,
-  };
-
-  if (message.replyToMessageId) {
-    metadata["reply_to_msg_id"] = message.replyToMessageId;
-  }
-
-  return JSON.stringify(metadata);
+  return `${message.messageId}. ` +
+    `${JSON.stringify(message.fromName)} ` +
+    (message.replyToMessageId
+      ? `replied to ${message.replyToMessageId}:`
+      : `said:`);
 }
 
 function quoteText(text: string): string {
@@ -28,11 +23,11 @@ ${messages.map(formatMessage).join("\n\n")}
 
 ---
 
-The first line of each message is a JSON representing its metadata. The rest of the message is the quoted message content.
+The first line of each message is its metadata. The rest of the message is the quoted message content.
 
-You can distinguish between users by 'sender_name' in metadata. Different users are different - reply to them accordingly. Do NOT mix them up.
+You can distinguish between users by the metadata. Different users are different - reply to them accordingly. Do NOT mix them up.
 
-Pay attention to the context. 'msg_id' and 'reply_to_msg_id' can show the relationships between messages.
+Pay attention to the context. The ids of the message can show the relationships between messages.
 
 You are now replying to the latest message. Do NOT include metadata or the quote symbol ('>') in your reply. Respond to the users in the language they use or request.`;
 }
