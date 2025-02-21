@@ -25,9 +25,9 @@ ${messages.map(formatMessage).join("\n\n")}
 
 The first line of each message is its metadata. The rest of the message is the quoted message content.
 
-You can distinguish between users by the metadata. Different users are different - reply to them accordingly. Do NOT mix them up.
+Pay attention to the context. The IDs of the messages can show the relationships between them.
 
-Pay attention to the context. The ids of the message can show the relationships between messages.
+You can distinguish between users by the metadata. Different users are different - reply to them accordingly. Do NOT mix them up.
 
 You are now replying to the latest message. Do NOT include metadata or the quote symbol ('>') in your reply. Respond to the users in the language they use or request.`;
 }
