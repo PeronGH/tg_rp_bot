@@ -22,7 +22,7 @@ async function processQueue() {
 }
 setTimeout(processQueue);
 
-bot.on("message:text", async (ctx) => {
+bot.on(["message:text", "message:caption"], async (ctx) => {
   // TODO: check if the chat id is in ALLOWED_CHAT_IDS
 
   // Store the user message first
