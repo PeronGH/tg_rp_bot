@@ -11,7 +11,7 @@ export function toStoreMessageSafe(
     fromId: from?.id,
     text: text ?? caption ?? "",
     replyToMessageId: reply_to_message?.message_id, // TODO: fix potential bug with forwarded message (unsure if the bug exists)
-    photoIdList: photo?.map(({ file_id }) => file_id),
+    photoIdList: [...new Set(photo?.map(({ file_id }) => file_id))],
   };
   return storeMessageSchema.safeParse(storeMsg);
 }
