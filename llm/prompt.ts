@@ -1,3 +1,4 @@
+import { fetchImageAsDataUrl } from "../bot/api.ts";
 import { StoreMessage } from "../store/schema.ts";
 import { MessageContent } from "./generate.ts";
 
@@ -24,12 +25,24 @@ function formatMessage(message: StoreMessage): string {
   return `${generateMetadata(message)}\n${message.text}`;
 }
 
-export function generatePrompt(messages: StoreMessage[]): MessageContent[] {
-  return [
-    ...messages.map((message) => ({
-      type: "text",
-      text: formatMessage(message),
-    } as const)),
-    { type: "text", text: finalPrompt },
-  ];
+export async function generatePrompt(
+  messages: StoreMessage[],
+): Promise<MessageContent[]> {
+  const contents: MessageContent[] = [];
+
+  for (const message of messages) {
+    contents.push({ type: "text", text: formatMessage(message) });
+    if (message.photoId) {
+      contents.push({
+        "type": "image_url",
+        "image_url": {
+          "url": await fetchImageAsDataUrl(message.photoId),
+        },
+      });
+    }
+  }
+
+  contents.push({ type: "text", text: finalPrompt });
+
+  return contents;
 }

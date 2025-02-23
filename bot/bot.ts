@@ -77,7 +77,7 @@ bot.on("message:text", async (ctx) => {
       }
     }
     // - Generate reply
-    const prompt = generatePrompt(messages);
+    const prompt = await generatePrompt(messages);
     console.info("prompt", prompt);
     const replyContent = await generate(...prompt);
     // - Send reply
