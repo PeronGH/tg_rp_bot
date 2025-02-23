@@ -9,7 +9,7 @@ export function toStoreMessageSafe(
     messageId: message_id,
     fromName: formatName(from?.first_name, from?.last_name) ?? "Unknown",
     fromId: from?.id,
-    text: text ?? caption,
+    text: text ?? caption ?? "",
     replyToMessageId: reply_to_message?.message_id, // TODO: fix potential bug with forwarded message (unsure if the bug exists)
     photoIdList: photo?.map(({ file_id }) => file_id),
   };
