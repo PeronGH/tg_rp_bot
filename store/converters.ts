@@ -35,5 +35,5 @@ function formatName(
 }
 
 function findPhotoId(sizes: PhotoSize[]): string | undefined {
-  return sizes.slice(0, 3).reverse().at(0)?.file_id;
+  return sizes.at(-1)?.file_id;
 }
