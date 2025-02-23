@@ -33,9 +33,9 @@ bot.on(["message:text", "message:photo"], async (ctx) => {
   // Ensure it is either a direct reply to bot message
   // or a message includes @BotName
   if (
-    ctx.message.text && // TODO: reply to photo-only message
-    ctx.message.reply_to_message?.from?.id !== bot.botInfo.id &&
-    !ctx.message.text.includes(`@${bot.botInfo.username}`)
+    !userMsg.text && // TODO: reply to photo-only message
+    userMsg.fromId !== bot.botInfo.id &&
+    !userMsg.text.includes(`@${bot.botInfo.username}`)
   ) return;
 
   queue.push(async () => {
