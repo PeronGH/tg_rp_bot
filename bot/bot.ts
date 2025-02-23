@@ -33,7 +33,7 @@ bot.on(["message:text", "message:caption"], async (ctx) => {
   // Ensure it is either a direct reply to bot message
   // or a message includes @BotName
   if (
-    userMsg.fromId !== bot.botInfo.id &&
+    ctx.message.reply_to_message?.from?.id !== bot.botInfo.id &&
     !userMsg.text.includes(`@${bot.botInfo.username}`)
   ) return;
 
