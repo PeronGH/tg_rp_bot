@@ -11,6 +11,8 @@ export const storeMessageDataSchema = z.object({
 export const storeMessageSchema = storeMessageDataSchema.extend({
   messageId: z.number(),
   chatId: z.number(),
+}).refine((message) => message.text || message.photoId, {
+  message: "Either text or photoId must be present",
 });
 
 export type StoreMessageData = z.infer<typeof storeMessageDataSchema>;
