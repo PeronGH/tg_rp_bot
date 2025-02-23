@@ -33,10 +33,13 @@ export async function generatePrompt(
   for (const message of messages) {
     contents.push({ type: "text", text: formatMessage(message) });
     if (message.photoId) {
+      const base64Image =
+        (await fetchFileAsDataUrl(message.photoId)).split(",")[1];
+
       contents.push({
-        "type": "image_url",
-        "image_url": {
-          "url": await fetchFileAsDataUrl(message.photoId),
+        type: "image_url",
+        image_url: {
+          "url": `data:image/jpeg;base64,${base64Image}`,
         },
       });
     }
