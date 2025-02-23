@@ -22,7 +22,7 @@ async function processQueue() {
 }
 setTimeout(processQueue);
 
-bot.on("message:text", async (ctx) => {
+bot.on(["message:text", "message:photo"], async (ctx) => {
   // TODO: check if the chat id is in ALLOWED_CHAT_IDS
 
   // Store the user message first
@@ -33,6 +33,7 @@ bot.on("message:text", async (ctx) => {
   // Ensure it is either a direct reply to bot message
   // or a message includes @BotName
   if (
+    ctx.message.text && // TODO: reply to photo-only message
     ctx.message.reply_to_message?.from?.id !== bot.botInfo.id &&
     !ctx.message.text.includes(`@${bot.botInfo.username}`)
   ) return;
@@ -92,7 +93,7 @@ bot.on("message:text", async (ctx) => {
   });
 });
 
-bot.on("edited_message:text", async (ctx) => {
+bot.on(["edited_message:text", "edited_message:photo"], async (ctx) => {
   // Store the updated user message
   const editedMsg = toStoreMessage(ctx.editedMessage);
   console.info("editedMsg", editedMsg);
