@@ -3,6 +3,10 @@
   "specifiers": {
     "jsr:@openai/openai@^4.83.0": "4.83.0",
     "jsr:@std/dotenv@~0.225.3": "0.225.3",
+    "npm:@types/node@*": "22.12.0",
+    "npm:@xsai/generate-text@~0.1.0-beta.6": "0.1.0-beta.6",
+    "npm:@xsai/shared-chat@~0.1.0-beta.6": "0.1.0-beta.6",
+    "npm:@xsai/shared@~0.1.0-beta.6": "0.1.0-beta.6",
     "npm:grammy@^1.34.1": "1.34.1",
     "npm:ip-range-check@0.2": "0.2.0",
     "npm:zod@3": "3.24.2",
@@ -22,6 +26,27 @@
   "npm": {
     "@grammyjs/types@3.18.0": {
       "integrity": "sha512-/VpQcT6Z0+Lw6H6jv2JvnDmqB1/9rjbFdDBlPBPUW3kQ1bWfjzfaiVk2+J2eiid3o3sLaPp3ZK0XjEI1gWNc3g=="
+    },
+    "@types/node@22.12.0": {
+      "integrity": "sha512-Fll2FZ1riMjNmlmJOdAyY5pUbkftXslB5DgEzlIuNaiWhXd00FhWxVC/r4yV/4wBb9JfImTu+jiSvXTkJ7F/gA==",
+      "dependencies": [
+        "undici-types"
+      ]
+    },
+    "@xsai/generate-text@0.1.0-beta.6": {
+      "integrity": "sha512-RB/b5/Uxeq4fBiM7CqvhHOwuC6hQ04rHUv14NCx3vGH8WY6nEOR5P/LVtKzO273lGgqepbyR1hpfwZFSyt048g==",
+      "dependencies": [
+        "@xsai/shared-chat"
+      ]
+    },
+    "@xsai/shared-chat@0.1.0-beta.6": {
+      "integrity": "sha512-I2e7JCbho1qowsJ2/SDnebcUIWl/cHEHbjA79fyS9YIcAi4H/mVLEJZgJvhnrZmMzO97zFNgo8FAJ5eTA/dkFQ==",
+      "dependencies": [
+        "@xsai/shared"
+      ]
+    },
+    "@xsai/shared@0.1.0-beta.6": {
+      "integrity": "sha512-UCTpiD9bCMdOwmoZebi4GNGHkiYMDtI2GUa8d4OCykcrn9sm/+7cjwt4xXm1MYslsMvCrTX1l0sC1QbWHi+kbQ=="
     },
     "abort-controller@3.0.0": {
       "integrity": "sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==",
@@ -68,6 +93,9 @@
     "tr46@0.0.3": {
       "integrity": "sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw=="
     },
+    "undici-types@6.20.0": {
+      "integrity": "sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg=="
+    },
     "webidl-conversions@3.0.1": {
       "integrity": "sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ=="
     },
@@ -86,6 +114,8 @@
     "dependencies": [
       "jsr:@openai/openai@^4.83.0",
       "jsr:@std/dotenv@~0.225.3",
+      "npm:@xsai/generate-text@~0.1.0-beta.6",
+      "npm:@xsai/shared-chat@~0.1.0-beta.6",
       "npm:grammy@^1.34.1",
       "npm:ip-range-check@0.2",
       "npm:zod@^3.24.2"

@@ -2,7 +2,7 @@ import { Bot } from "grammy";
 import { TG_BOT_TOKEN } from "../env.ts";
 import { toStoreMessage, toStoreMessageSafe } from "../store/converters.ts";
 import { listRecentMessages, writeMessage } from "../store/kv.ts";
-import { generate } from "../llm/openai.ts";
+import { generate } from "../llm/generate.ts";
 import { StoreMessage } from "../store/schema.ts";
 import { generatePrompt } from "../llm/prompt.ts";
 import { collectReplyChain } from "../store/collectors.ts";
@@ -79,11 +79,7 @@ bot.on("message:text", async (ctx) => {
     // - Generate reply
     const prompt = generatePrompt(messages);
     console.info("prompt:", prompt);
-    const replyContent = await generate([{
-      role: "user",
-      content: prompt,
-    }]);
-    console.info("replyContent:", replyContent);
+    const replyContent = await generate({ type: "text", text: prompt });
     // - Send reply
     const reply = await ctx.reply(replyContent, {
       reply_parameters: { message_id: userMsg.messageId },
