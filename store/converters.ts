@@ -35,9 +35,5 @@ function formatName(
 }
 
 function findPhotoId(sizes: PhotoSize[]): string | undefined {
-  if (sizes.length === 0) return;
-
-  console.info("photoSizes", sizes);
-
-  return sizes.at(-1)?.file_id;
+  return sizes.at(-2)?.file_id ?? sizes.at(-1)?.file_id;
 }
