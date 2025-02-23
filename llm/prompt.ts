@@ -1,4 +1,4 @@
-import { fetchImageAsDataUrl } from "../bot/api.ts";
+import { fetchFileAsDataUrl } from "../bot/api.ts";
 import { StoreMessage } from "../store/schema.ts";
 import { MessageContent } from "./generate.ts";
 
@@ -36,7 +36,7 @@ export async function generatePrompt(
       contents.push({
         "type": "image_url",
         "image_url": {
-          "url": await fetchImageAsDataUrl(message.photoId),
+          "url": await fetchFileAsDataUrl(message.photoId),
         },
       });
     }

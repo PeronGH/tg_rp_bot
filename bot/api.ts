@@ -5,7 +5,7 @@ function getFileUrlByPath(path: string) {
   return `https://api.telegram.org/file/bot${TG_BOT_TOKEN}/${path}`;
 }
 
-export async function fetchImageAsDataUrl(id: string): Promise<string> {
+export async function fetchFileAsDataUrl(id: string): Promise<string> {
   const { file_path } = await bot.api.getFile(id);
   if (!file_path) throw new Error("File is not downloadable");
   console.debug("fetching file path:", file_path);
