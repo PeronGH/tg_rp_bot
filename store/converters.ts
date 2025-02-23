@@ -1,17 +1,17 @@
-import type { Message } from "grammy/types";
+import type { Message, PhotoSize } from "grammy/types";
 import { StoreMessage, storeMessageSchema } from "./schema.ts";
 
 export function toStoreMessageSafe(
   { message_id, from, reply_to_message, text, caption, chat, photo }: Message,
 ) {
-  const storeMsg = {
+  const storeMsg: Partial<StoreMessage> = {
     chatId: chat.id,
     messageId: message_id,
     fromName: formatName(from?.first_name, from?.last_name) ?? "Unknown",
     fromId: from?.id,
     text: text ?? caption ?? "",
     replyToMessageId: reply_to_message?.message_id, // TODO: fix potential bug with forwarded message (unsure if the bug exists)
-    photoIdList: [...new Set(photo?.map(({ file_id }) => file_id))],
+    photoId: findPhotoId(photo ?? []),
   };
   return storeMessageSchema.safeParse(storeMsg);
 }
@@ -32,4 +32,12 @@ function formatName(
   if (firstName) return firstName;
   // Only last name
   if (lastName) return lastName;
+}
+
+function findPhotoId(sizes: PhotoSize[]): string | undefined {
+  if (sizes.length === 0) return;
+
+  console.info("photoSizes", sizes);
+
+  return sizes.at(-1)?.file_id;
 }

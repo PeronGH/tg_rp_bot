@@ -5,7 +5,7 @@ export const storeMessageDataSchema = z.object({
   replyToMessageId: z.number().nullish(),
   fromName: z.string(),
   fromId: z.number(),
-  photoIdList: z.string().array().nullish(),
+  photoId: z.string().nullish(),
 });
 
 export const storeMessageSchema = storeMessageDataSchema.extend({

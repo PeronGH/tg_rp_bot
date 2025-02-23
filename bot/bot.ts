@@ -93,10 +93,10 @@ bot.on("message:text", async (ctx) => {
 });
 
 bot.on("message:photo", async (ctx) => {
-  // Store the user message with photo ids
-  const userMsg = toStoreMessage(ctx.message);
-  console.info("userMsg", userMsg);
-  await writeMessage(userMsg);
+  // Store the user message with photo id
+  const photoMsg = toStoreMessage(ctx.message);
+  console.info("photoMsg", photoMsg);
+  await writeMessage(photoMsg);
 });
 
 bot.on(["edited_message:text", "edited_message:photo"], async (ctx) => {
