@@ -2,9 +2,13 @@ import { StoreMessage } from "../store/schema.ts";
 import { MessageContent } from "./generate.ts";
 
 const finalPrompt =
-  `You are now chatting with people on Telegram. The above is a list of relevant Telegram messages.
+  `You are now chatting with people on Telegram. The following is a list of relevant Telegram messages.
 
-The first line of each message is its metadata. Pay attention to the context. The IDs of the messages can show the relationships between them. You can distinguish between users by the metadata. Different users are different - reply to them accordingly. Do NOT mix them up.
+The first line of each message contains its metadata. The remaining lines represent the message content as it was originally written.
+
+Pay attention to the context. The message IDs can reveal the relationships between them.
+
+You can distinguish between users by examining the metadata. Different users are distinct, so reply to them accordingly. Do NOT confuse them.
 
 You are now replying to the latest message. Do NOT include metadata in your reply. Respond to the users in the language they use or request.`;
 
