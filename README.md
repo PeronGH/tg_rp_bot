@@ -6,7 +6,7 @@
 
     - See `.env.example` for a list of supported environment variables.
     - Create a `.env` file in the root directory and fill in the variables.
-    - Or just pass them as environment variables (especially if you use Deno Deploy)
+    - Or just pass them as environment variables (especially if you use Deno Deploy).
 
 2. Deploy using Deno
 
@@ -16,7 +16,7 @@
     deno run -A --unstable polling.ts
     ```
 
-    - For webhook, use the following command:
+    - For webhook, use the following commands:
 
     ```bash
     deno run -A set_webhook.ts
