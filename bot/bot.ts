@@ -7,6 +7,7 @@ import { StoreMessage } from "../store/schema.ts";
 import { generatePrompt } from "../llm/prompt.ts";
 import { collectReplyChain } from "../store/collectors.ts";
 import { Buffer } from "node:buffer";
+import { createWavBuffer } from "../utils/wav.ts";
 
 export const bot = new Bot(TG_BOT_TOKEN);
 
@@ -84,7 +85,10 @@ bot.on(["message:text", "message:caption"], async (ctx) => {
     // - Send reply
     const reply = encodedAudio
       ? await ctx.replyWithAudio(
-        new InputFile(Buffer.from(encodedAudio, "base64"), "reply.wav"),
+        new InputFile(
+          createWavBuffer(Buffer.from(encodedAudio, "base64")),
+          "reply.wav",
+        ),
         {
           caption: replyText,
           reply_parameters: { message_id: userMsg.messageId },
