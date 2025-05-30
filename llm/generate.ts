@@ -23,6 +23,7 @@ export type MessageOutput = {
 export async function generate(
   ...contents: MessageContent[]
 ): Promise<MessageOutput> {
+  console.info("Generating text response...");
   const textResp = await ai.models.generateContent({
     model: GEMINI_TEXT_MODEL,
     contents,
@@ -43,6 +44,7 @@ export async function generate(
     return output;
   }
 
+  console.info("Generating audio response...");
   const audioResp = await ai.models.generateContent({
     model: GEMINI_AUDIO_MODEL,
     contents: [
