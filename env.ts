@@ -3,7 +3,10 @@ import "@std/dotenv/load";
 function getRequiredEnv(variableName: string): string {
   const value = Deno.env.get(variableName);
   if (!value) {
-    throw new Error(`${variableName} is not set!`);
+    console.error(
+      `Environment variable ${variableName} is not set. Please set it before running the application.`,
+    );
+    return "";
   }
   return value;
 }
