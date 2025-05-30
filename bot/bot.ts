@@ -1,4 +1,4 @@
-import { Bot } from "grammy";
+import { Bot, InputFile } from "grammy";
 import { TG_BOT_TOKEN } from "../env.ts";
 import { toStoreMessage, toStoreMessageSafe } from "../store/converters.ts";
 import { listRecentMessages, writeMessage } from "../store/kv.ts";
@@ -6,6 +6,7 @@ import { generate } from "../llm/generate.ts";
 import { StoreMessage } from "../store/schema.ts";
 import { generatePrompt } from "../llm/prompt.ts";
 import { collectReplyChain } from "../store/collectors.ts";
+import { Buffer } from "node:buffer";
 
 export const bot = new Bot(TG_BOT_TOKEN);
 
@@ -79,11 +80,22 @@ bot.on(["message:text", "message:caption"], async (ctx) => {
     // - Generate reply
     const prompt = await generatePrompt(messages);
     console.info("prompt", prompt);
-    const replyContent = await generate(...prompt);
+    const { text: replyText, encodedAudio } = await generate(...prompt);
     // - Send reply
-    const reply = await ctx.reply(replyContent, {
-      reply_parameters: { message_id: userMsg.messageId },
-    });
+    const reply = encodedAudio
+      ? await ctx.replyWithAudio(
+        new InputFile(Buffer.from(encodedAudio, "base64"), "reply.wav"),
+        {
+          caption: replyText,
+          reply_parameters: { message_id: userMsg.messageId },
+        },
+      )
+      : await ctx.reply(
+        replyText,
+        {
+          reply_parameters: { message_id: userMsg.messageId },
+        },
+      );
 
     // Store the reply message
     const replyMsg = toStoreMessage(reply);

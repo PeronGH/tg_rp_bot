@@ -31,21 +31,21 @@ export async function generatePrompt(
   const contents: MessageContent[] = [];
 
   for (const message of messages) {
-    contents.push({ type: "text", text: formatMessage(message) });
+    contents.push({ text: formatMessage(message) });
     if (message.photoId) {
       const base64Image =
         (await fetchFileAsDataUrl(message.photoId)).split(",")[1];
 
       contents.push({
-        type: "image_url",
-        image_url: {
-          "url": `data:image/jpeg;base64,${base64Image}`,
+        inlineData: {
+          data: base64Image,
+          mimeType: "image/jpeg",
         },
       });
     }
   }
 
-  contents.push({ type: "text", text: finalPrompt });
+  contents.push({ text: finalPrompt });
 
   return contents;
 }
