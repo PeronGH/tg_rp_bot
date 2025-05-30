@@ -3,7 +3,7 @@ import { StoreMessage } from "../store/schema.ts";
 import { MessageContent } from "./generate.ts";
 
 const finalPrompt =
-  `You are now chatting with people on Telegram. The following is a list of relevant Telegram messages.
+  `You are now chatting with people on Telegram. The above is a list of relevant Telegram messages.
 
 The first line of each message contains its metadata. The remaining lines represent the message content as it was originally written.
 
